@@ -62,7 +62,8 @@ def stats(update, context):
             f'<b>Memory Used:</b> {mem_u}\n'
     sendMessage(stats, context.bot, update.message)
 
-
+grpbot = f"<a href="https://t.me/bot2mirror">Group</a>\n"
+    
 def start(update, context):
     buttons = ButtonMaker()
     buttons.buildbutton("👑 OWNER 👑", "https://t.me/RubyMathews_Bot")
@@ -75,7 +76,7 @@ Type /{BotCommands.HelpCommand} to get a list of available commands
 '''
         sendMarkup(start_string, context.bot, update.message, reply_markup)
     else:
-        sendMarkup('Not Authorized User, Please use this bot on our [Group](https://t.me/bot2mirror)', context.bot, update.message, reply_markup)
+        sendMarkup('Not Authorized User, Please use this bot on our', grpbot, context.bot, update.message, reply_markup)
 
 def restart(update, context):
     restart_message = sendMessage("Restarting...", context.bot, update.message)
