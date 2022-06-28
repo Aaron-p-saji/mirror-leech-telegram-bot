@@ -62,7 +62,7 @@ def stats(update, context):
             f'<b>Memory Used:</b> {mem_u}\n'
     sendMessage(stats, context.bot, update.message)
 
-grpbot = 'Not Authorized User, Please use this bot on our'
+grpbot = 'Not Authorized User, Please use this bot on our '
 grpbot += f"<a href='https://t.me/bot2mirror'>Group</a>\n"
     
 def start(update, context):
