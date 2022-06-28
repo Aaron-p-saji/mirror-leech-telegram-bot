@@ -65,8 +65,8 @@ def stats(update, context):
 
 def start(update, context):
     buttons = ButtonMaker()
-    buttons.buildbutton("Repo", "https://www.github.com/anasty17/mirror-leech-telegram-bot")
-    buttons.buildbutton("Report Group", "https://t.me/+PRRzqHd31XY3ZWZk")
+    buttons.buildbutton("👑 OWNER 👑", "https://t.me/RubyMathews_Bot")
+    buttons.buildbutton("✖️ Mirror Group ✖️", "https://t.me/bot2mirror")
     reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
         start_string = f'''
@@ -75,7 +75,7 @@ Type /{BotCommands.HelpCommand} to get a list of available commands
 '''
         sendMarkup(start_string, context.bot, update.message, reply_markup)
     else:
-        sendMarkup('Not Authorized user, deploy your own mirror-leech bot', context.bot, update.message, reply_markup)
+        sendMarkup('Not Authorized User, Please use this bot on our [Group](https://t.me/bot2mirror)', context.bot, update.message, reply_markup)
 
 def restart(update, context):
     restart_message = sendMessage("Restarting...", context.bot, update.message)
@@ -171,7 +171,7 @@ help_string_telegraph = f'''<br>
 '''
 
 help = telegraph.create_page(
-        title='Mirror-Leech-Bot Help',
+        title='Lionel Messi Bot Help',
         content=help_string_telegraph,
     )["path"]
 
@@ -195,7 +195,7 @@ help_string = f'''
 
 def bot_help(update, context):
     button = ButtonMaker()
-    button.buildbutton("Other Commands", f"https://telegra.ph/{help}")
+    button.buildbutton("All Commands", f"https://telegra.ph/{help}")
     reply_markup = InlineKeyboardMarkup(button.build_menu(1))
     sendMarkup(help_string, context.bot, update.message, reply_markup)
 
@@ -208,15 +208,15 @@ def main():
                 if ospath.isfile(".restartmsg"):
                     with open(".restartmsg") as f:
                         chat_id, msg_id = map(int, f)
-                    msg = 'Restarted successfully!'
+                    msg = '😊 Restarted successfully! 😊'
                 else:
-                    msg = 'Bot Restarted!'
+                    msg = '🤖 Bot Restarted! 🤖'
                 for tag, links in data.items():
                      msg += f"\n\n{tag}: "
                      for index, link in enumerate(links, start=1):
                          msg += f" <a href='{link}'>{index}</a> |"
                          if len(msg.encode()) > 4000:
-                             if 'Restarted successfully!' in msg and cid == chat_id:
+                             if '😊 Restarted successfully! 😊' in msg and cid == chat_id:
                                  bot.editMessageText(msg, chat_id, msg_id, parse_mode='HTMl', disable_web_page_preview=True)
                                  osremove(".restartmsg")
                              else:
