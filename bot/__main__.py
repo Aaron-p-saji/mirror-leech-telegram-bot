@@ -70,7 +70,7 @@ def start(update, context):
     buttons.buildbutton("👑 OWNER 👑", "https://t.me/RubyMathews_Bot")
     buttons.buildbutton("🎯 Mirror Group 🎯", "https://t.me/bot2mirror")
     buttons.sbutton("TEST" , 'testatl' )
-    bot.answer_callback_query(callback_query_id = 'testatl' , text="Sorry" ,show_alert = True)
+    testa1.answer("You are using this for one of my old message, please send the request again.",show_alert=True)
     reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
         start_string = f'''
