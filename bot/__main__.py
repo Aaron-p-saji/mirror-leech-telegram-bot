@@ -69,7 +69,7 @@ def start(update, context):
     buttons = ButtonMaker()
     buttons.buildbutton("👑 OWNER 👑", "https://t.me/RubyMathews_Bot")
     buttons.buildbutton("🎯 Mirror Group 🎯", "https://t.me/bot2mirror")
-    buttons.buildbutton("TEST" , callback_data = 'testatl' )
+    buttons.sbutton("TEST" , callback_data = 'testatl' )
     bot.answer_callback_query(callback_query_id = 'testatl' , text="Sorry" ,show_alert = True)
     reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
