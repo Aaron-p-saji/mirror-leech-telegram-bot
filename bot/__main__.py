@@ -74,6 +74,7 @@ def start(update, context):
         InlineKeyboardButton("Option 1", callback_data='1'),
         InlineKeyboardButton("Option 2", callback_data='2'),
     ]
+    ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     query = update.callback_query
         query.answer(text= Hai , show_alert=true)
