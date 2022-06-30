@@ -69,7 +69,14 @@ def start(update, context):
     buttons = ButtonMaker()
     buttons.buildbutton("👑 OWNER 👑", "https://t.me/RubyMathews_Bot")
     buttons.buildbutton("🎯 Mirror Group 🎯", "https://t.me/bot2mirror")
-    reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
+    keyboard = [
+    [
+        InlineKeyboardButton("Option 1", callback_data='1'),
+        InlineKeyboardButton("Option 2", callback_data='2'),
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    query = update.callback_query
+        query.answer(text= Hai , show_alert=true)
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
         start_string = f'''
 This bot can mirror all your links to Google Drive!
