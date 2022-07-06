@@ -12,7 +12,7 @@ from bot.helper.telegram_helper import button_build
 def list_buttons(update, context):
     user_id = update.message.from_user.id
     if len(context.args) == 0:
-        return sendMessage('Send a search key along with command\n \<\usage\>\ : /list [query or search term]', context.bot, update.message)
+        return sendMessage('Send a search key along with command\n `usage : /list [query or search term]` ', context.bot, update.message)
     buttons = button_build.ButtonMaker()
     buttons.sbutton("Folders", f"types {user_id} folders")
     buttons.sbutton("Files", f"types {user_id} files")
@@ -29,7 +29,7 @@ def select_type(update, context):
     data = query.data
     data = data.split()
     if user_id != int(data[1]):
-        return query.answer(text="Not Yours!", show_alert=True)
+        return query.answer(text="Lazy Buoy!!!😂 Search Your Own", show_alert=True)
     elif data[2] == 'cancel':
         query.answer()
         return editMessage("list has been canceled!", msg)
