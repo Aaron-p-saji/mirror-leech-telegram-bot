@@ -196,6 +196,15 @@ help_string = f'''
 '''
 
 def bot_help(update, context):
+    query = update.callback_query
+    message = query.message
+    user_id = query.from_user.id
+    data = query.data
+    data = data.split()
+    if user_id != int(data[1]):
+        query.answer(text="Not Yours!", show_alert=True)
+    else:
+        
     button = ButtonMaker()
     button.buildbutton("All Commands", f"https://telegra.ph/{help}")
     reply_markup = InlineKeyboardMarkup(button.build_menu(1))
