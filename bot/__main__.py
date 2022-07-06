@@ -69,6 +69,17 @@ def start(update, context):
     buttons = ButtonMaker()
     buttons.buildbutton("👑 OWNER 👑", "https://t.me/RubyMathews_Bot")
     buttons.buildbutton("🎯 Mirror Group 🎯", "https://t.me/bot2mirror")
+    buttons.sbutton("Send As Document", "doc")
+    query = update.callback_query
+    message = query.message
+    user_id = query.from_user.id
+    data = query.data
+    data = data.split()
+    if user_id != int(data[1]):
+        query.answer(text="Not Yours!", show_alert=True)
+    else data[2] == "doc":
+        query.answer(text="Your File Will Deliver As Document!", show_alert=True)
+        
     reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
         start_string = f'''
