@@ -196,7 +196,7 @@ help_string = f'''
 '''
 
 def bot_help(update, context):
-button = ButtonMaker()
+    button = ButtonMaker()
     button.buildbutton("All Commands", f"https://telegra.ph/{help}")
     reply_markup = InlineKeyboardMarkup(button.build_menu(1))
     sendMarkup(help_string, context.bot, update.message, reply_markup)
