@@ -234,7 +234,7 @@ class MirrorListener:
                         buttons.buildbutton("👑 OWNER 👑", "https://t.me/RubyMathews_Bot")
                         buttons.buildbutton("📊 BOT STATUS", "https://t.me/gDriveStatus")
                         buttons.sbutton("Send As Document", "test")
-                        app.answer_callback_query("test", text="Tset", show_alert=True)
+                        bot.answer_callback_query("test", text="Tset", show_alert=True)
             sendMarkup(msg, self.bot, self.message, InlineKeyboardMarkup(buttons.build_menu(2)))
             if self.isQbit and QB_SEED and not self.extract:
                 if self.isZip:
