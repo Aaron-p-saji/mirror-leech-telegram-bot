@@ -196,7 +196,7 @@ help_string = f'''
 '''
 
 def bot_help(update, context):
-     query = update.callback_query
+    query = update.callback_query
     message = query.message
     user_id = query.from_user.id
     data = query.data
