@@ -62,17 +62,13 @@ def stats(update, context):
             f'<b>Memory Used:</b> {mem_u}\n'
     sendMessage(stats, context.bot, update.message)
 
-grpbot = 'Not Authorized User, Please use this bot on our '
+grpbot = '🤨 Hey!! Wassap! Using This Bot On PM is Not Allowed, Please use this bot on our '
 grpbot += f"<a href='https://t.me/bot2mirror'>Group</a>\n"
     
 def start(update, context):
     buttons = ButtonMaker()
     buttons.buildbutton("👑 OWNER 👑", "https://t.me/RubyMathews_Bot")
     buttons.buildbutton("🎯 Mirror Group 🎯", "https://t.me/bot2mirror")
-    buttons.sbutton("Send As Document", "doc")
-    query = update.callback_query
-    message = query.message
-    doc.answer(text="Not Yours!", show_alert=True)
     reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
         start_string = f'''
