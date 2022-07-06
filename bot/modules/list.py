@@ -12,7 +12,7 @@ from bot.helper.telegram_helper import button_build
 def list_buttons(update, context):
     user_id = update.message.from_user.id
     if len(context.args) == 0:
-        return sendMessage('Send a search key along with command', context.bot, update.message)
+        return sendMessage('Send a search key along with command\n`<usage> : /list [query or search term]`', context.bot, update.message)
     buttons = button_build.ButtonMaker()
     buttons.sbutton("Folders", f"types {user_id} folders")
     buttons.sbutton("Files", f"types {user_id} files")
