@@ -72,7 +72,7 @@ def start(update, context):
     buttons.sbutton("Send As Document", "doc")
     query = update.callback_query
     message = query.message
-     doc.answer(text="Not Yours!", show_alert=True)
+    doc.answer(text="Not Yours!", show_alert=True)
     reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
         start_string = f'''
