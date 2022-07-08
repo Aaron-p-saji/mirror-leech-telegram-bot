@@ -231,8 +231,8 @@ class MirrorListener:
                     if VIEW_LINK:
                         share_urls = f'{INDEX_URL}/{url_path}?a=view'
                         buttons.buildbutton("🌐 View Link", share_urls)
-                        buttons.buildbutton("👑 OWNER 👑", "https://t.me/RubyMathews_Bot")
                         buttons.buildbutton("📊 BOT STATUS", "https://t.me/gDriveStatus")
+                        buttons.buildbutton("🔑 Drive Access 🔑", "https://groups.google.com/g/gdrive-bot")
             sendMarkup(msg, self.bot, self.message, InlineKeyboardMarkup(buttons.build_menu(2)))
             if self.isQbit and QB_SEED and not self.extract:
                 if self.isZip:
