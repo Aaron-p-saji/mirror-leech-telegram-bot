@@ -4,9 +4,8 @@ from subprocess import run as srun, check_output
 from psutil import disk_usage, cpu_percent, swap_memory, cpu_count, virtual_memory, net_io_counters, boot_time
 from time import time
 from sys import executable
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
-from telegram.ext import CallbackQueryHandler, CommandHandler, ContextTypes, filters, helpers, ParseMode
-import logging
+from telegram import InlineKeyboardMarkup
+from telegram.ext import CommandHandler
 
 from bot import bot, dispatcher, updater, botStartTime, IGNORE_PENDING_REQUESTS, LOGGER, Interval, INCOMPLETE_TASK_NOTIFIER, DB_URI, alive, app, main_loop
 from .helper.ext_utils.fs_utils import start_cleanup, clean_all, exit_clean_up
@@ -19,14 +18,6 @@ from .helper.telegram_helper.filters import CustomFilters
 from .helper.telegram_helper.button_build import ButtonMaker
 
 from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, shell, eval, delete, count, leech_settings, search, rss
-
-# Enable logging
-logging.basicConfig(
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
-)
-
-SO_COOL = "so-cool"
-KEYBOARD_CALLBACKDATA = "keyboard-callback-data"
 
 def stats(update, context):
     if ospath.exists('.git'):
@@ -102,17 +93,14 @@ def restart(update, context):
 
 
 async def ping(update, context):
-    
-    bot = context.bot
-    url = helpers.create_deep_linked_url(bot.username, SO_COOL)
-    text = (
-        "Awesome, you just accessed hidden functionality! "
-        "Now let's get back to the private chat."
-    )
-    keyboard = InlineKeyboardMarkup.from_button(
-        InlineKeyboardButton(text="Continue here!", url=url)
-    )
-    await update.message.reply_text(text, reply_markup=keyboard)
+    start_time = int(round(time() * 1000))
+    reply = sendMessage("Starting Ping", context.bot, update.message)
+    end_time = int(round(time() * 1000))
+    editMessage("Pinging The Bot ", reply)
+    editMessage("🟢", reply)
+    editMessage("🟢🟢", reply)
+    editMessage("🟢🟢🟢", reply)
+    editMessage(f'{end_time - start_time} ms', reply)
 
 
 def log(update, context):
