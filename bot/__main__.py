@@ -102,7 +102,7 @@ def restart(update, context):
     osexecl(executable, executable, "-m", "bot")
 
 
-def ping(update, context):
+async def ping(update, context):
     
     bot = context.bot
     url = helpers.create_deep_linked_url(bot.username, SO_COOL)
