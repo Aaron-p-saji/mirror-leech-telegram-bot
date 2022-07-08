@@ -4,8 +4,9 @@ from subprocess import run as srun, check_output
 from psutil import disk_usage, cpu_percent, swap_memory, cpu_count, virtual_memory, net_io_counters, boot_time
 from time import time
 from sys import executable
-from telegram import InlineKeyboardMarkup
-from telegram.ext import CommandHandler
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, helpers
+from telegram.constants import ParseMode
+from telegram.ext import Application, CallbackQueryHandler, CommandHandler, ContextTypes, filters
 
 from bot import bot, dispatcher, updater, botStartTime, IGNORE_PENDING_REQUESTS, LOGGER, Interval, INCOMPLETE_TASK_NOTIFIER, DB_URI, alive, app, main_loop
 from .helper.ext_utils.fs_utils import start_cleanup, clean_all, exit_clean_up
@@ -19,6 +20,9 @@ from .helper.telegram_helper.button_build import ButtonMaker
 
 from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, shell, eval, delete, count, leech_settings, search, rss
 
+
+SO_COOL = "so-cool"
+KEYBOARD_CALLBACKDATA = "keyboard-callback-data"
 
 def stats(update, context):
     if ospath.exists('.git'):
@@ -209,6 +213,22 @@ def bot_help(update, context):
     sendMarkup(help_string, context.bot, update.message, reply_markup)
 
 def main():
+    
+    application.add_handler(
+        CommandHandler("start", deep_linked_level_4, filters.Regex(USING_KEYBOARD))
+    )
+
+    # register callback handler for inline keyboard button
+    application.add_handler(
+        CallbackQueryHandler(deep_link_level_3_callback, pattern=KEYBOARD_CALLBACKDATA)
+    )
+
+    # Make sure the deep-linking handlers occur *before* the normal /start handler.
+    application.add_handler(CommandHandler("start", start))
+
+    # Run the bot until the user presses Ctrl-C
+    application.run_polling()
+    
     start_cleanup()
     if INCOMPLETE_TASK_NOTIFIER and DB_URI is not None:
         notifier_dict = DbManger().get_incomplete_tasks()
