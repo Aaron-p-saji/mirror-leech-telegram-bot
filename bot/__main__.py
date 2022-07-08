@@ -99,6 +99,10 @@ def ping(update, context):
     editMessage("Pinging The Bot ", reply)
     editMessage("🟢", reply)
     editMessage("🟢🟢", reply)
+    editMessage("🟢🟢", reply)
+    editMessage("🟢🟢", reply)
+    editMessage("🟢🟢🟢", reply)
+    editMessage("🟢🟢🟢", reply)
     editMessage("🟢🟢🟢", reply)
     editMessage(f'{end_time - start_time} ms', reply)
 
