@@ -92,7 +92,7 @@ def restart(update, context):
     osexecl(executable, executable, "-m", "bot")
 
 
-async def ping(update, context):
+def ping(update, context):
     start_time = int(round(time() * 1000))
     reply = sendMessage("Starting Ping", context.bot, update.message)
     end_time = int(round(time() * 1000))
