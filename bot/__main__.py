@@ -205,22 +205,6 @@ def bot_help(update, context):
     sendMarkup(help_string, context.bot, update.message, reply_markup)
 
 def main():
-    
-    application.add_handler(
-        CommandHandler("start", deep_linked_level_4, filters.Regex(USING_KEYBOARD))
-    )
-
-    # register callback handler for inline keyboard button
-    application.add_handler(
-        CallbackQueryHandler(deep_link_level_3_callback, pattern=KEYBOARD_CALLBACKDATA)
-    )
-
-    # Make sure the deep-linking handlers occur *before* the normal /start handler.
-    application.add_handler(CommandHandler("start", start))
-
-    # Run the bot until the user presses Ctrl-C
-    application.run_polling()
-    
     start_cleanup()
     if INCOMPLETE_TASK_NOTIFIER and DB_URI is not None:
         notifier_dict = DbManger().get_incomplete_tasks()
