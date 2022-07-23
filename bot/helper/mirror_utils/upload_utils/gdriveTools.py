@@ -669,8 +669,9 @@ class GoogleDriveHelper:
         msg = f"<b>Found {contents_count} result for <i>{fileName}</i></b>"
         buttons = ButtonMaker()
         buttons.buildbutton("🔎 VIEW", f"https://telegra.ph/{path[0]}")
+        buttons.buildbutton("🔑 Drive Access 🔑", "https://groups.google.com/g/gdrive-bot")
 
-        return msg, InlineKeyboardMarkup(buttons.build_menu(1))
+        return msg, InlineKeyboardMarkup(buttons.build_menu(2))
 
     def count(self, link):
         try:
