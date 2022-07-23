@@ -392,7 +392,7 @@ def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=Fals
             gmsg += f"Use /{BotCommands.UnzipMirrorCommand} to extracts Google Drive archive file"
             buttoni = ButtonMaker()
             buttoni.buildbutton("🔑 Drive Access 🔑", "https://groups.google.com/g/gdrive-bot")
-            sendMessage(gmsg, bot, message, InlineKeyboardMarkup(buttoni.build_menu(2)))
+            sendMarkup(gmsg, bot, message, InlineKeyboardMarkup(buttoni.build_menu(2)))
         else:
             Thread(target=add_gd_download, args=(link, listener, is_gdtot)).start()
     elif is_mega_link(link):
