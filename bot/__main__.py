@@ -117,12 +117,13 @@ def aboutme(update, context):
 
 def aboutcc(update, context):
     infos = 'Processing....'
-    infoss = 'Test'
+    infoss = f'Hai {update.message.from_user.first_name},\nIam Ruby the owner of this bot.\nI\'ve used an open source project to create this bot\nIf you have any issues with this bot please contact me'
     query = update.callback_query
     message = query.message
     user_id = query.from_user.id
     data = query.data
     data = data.split()
+    query.answer(text=infos, show_alert=False)
     query.answer(text=infoss, show_alert=True)
 
 def log(update, context):
