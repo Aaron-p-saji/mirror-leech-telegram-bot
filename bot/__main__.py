@@ -112,7 +112,8 @@ def aboutme(update, context):
     img = 'https://telegra.ph/file/a9533faa4c8ae2322b6cf.jpg'
     buttonu = ButtonMaker()
     buttonu.sbutton("🎫 Owners Note 🎫", 'aebx')
-    reply_markup = InlineKeyboardMarkup(buttonu.build_menu(1))
+    buttonu.sbutton("CLOSE", 'aeby')
+    reply_markup = InlineKeyboardMarkup(buttonu.build_menu(2))
     sendImgz(img, info_string, context.bot, update.message, reply_markup)
 
 def aboutcc(update, context):
@@ -124,6 +125,14 @@ def aboutcc(update, context):
     data = query.data
     data = data.split()
     query.answer(text=infoss, show_alert=True)
+    query.delete_message()
+    
+def aboutcy(update, context):
+    query = update.callback_query
+    message = query.message
+    user_id = query.from_user.id
+    data = query.data
+    data = data.split()
     query.delete_message()
 
 def log(update, context):
@@ -271,6 +280,7 @@ def main():
     start_handler = CommandHandler(BotCommands.StartCommand, start, run_async=True)
     aboutme_handler = CommandHandler(BotCommands.AboutMeCommand, aboutme, run_async=True)
     aboutcc_handler = CallbackQueryHandler(aboutcc, pattern="aebx", run_async=True)
+    aboutcy_handler = CallbackQueryHandler(aboutcy, pattern="aeby", run_async=True)
     ping_handler = CommandHandler(BotCommands.PingCommand, ping,
                                   filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
     restart_handler = CommandHandler(BotCommands.RestartCommand, restart,
