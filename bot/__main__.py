@@ -116,13 +116,8 @@ def aboutme(update, context):
     sendImgz(img, info_string, context.bot, update.message, reply_markup)
 
 def aboutcc(update, context):
-    icpuUsage = cpu_percent(interval=0.5)
-    imemory = virtual_memory()
-    imem_p = imemory.percent
-    itotal, iused, ifree, idisk = disk_usage('/')
-    
     infos = 'Processing....'
-    infoss = f'Hai {update.message.from_user.first_name},\nIam Ruby the owner of this bot.\nI\'ve used an open source project to create this bot\nIf you have any issues with this bot please contact me'
+    infoss = 'Test'
     query = update.callback_query
     message = query.message
     user_id = query.from_user.id
