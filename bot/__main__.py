@@ -132,7 +132,9 @@ def aboutcy(update, context):
     user_id = query.from_user.id
     data = query.data
     data = data.split()
+    query.answer(text='Click OK to close', show_alert=True)
     query.delete_message()
+    message.delete_message()
 
 def log(update, context):
     sendLogFile(context.bot, update.message)
