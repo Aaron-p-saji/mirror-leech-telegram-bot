@@ -124,7 +124,7 @@ def aboutcc(update, context):
     data = query.data
     data = data.split()
     query.answer(text=infoss, show_alert=True)
-    query.answer(text=infos)
+    query.delete_message()
 
 def log(update, context):
     sendLogFile(context.bot, update.message)
