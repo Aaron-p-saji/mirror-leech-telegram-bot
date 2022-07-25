@@ -294,6 +294,7 @@ def main():
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(aboutme_handler)
     dispatcher.add_handler(aboutcc_handler)
+    dispatcher.add_handler(aboutcy_handler)
     dispatcher.add_handler(ping_handler)
     dispatcher.add_handler(restart_handler)
     dispatcher.add_handler(help_handler)
