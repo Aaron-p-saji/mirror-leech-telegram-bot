@@ -125,7 +125,6 @@ def aboutcc(update, context):
     data = query.data
     data = data.split()
     query.answer(text=infoss, show_alert=True)
-    query.delete_message()
     
 def aboutcy(update, context):
     query = update.callback_query
