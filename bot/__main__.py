@@ -116,8 +116,9 @@ def aboutme(update, context):
     sendImgz(img, info_string, context.bot, update.message, reply_markup)
 
 def aboutcc(update, context):
+    my_userid = update.message.from_user.first_name
     infos = 'Processing....'
-    infoss = f'Hai {update.message.from_user.first_name},\nIam Ruby the owner of this bot.\nI\'ve used an open source project to create this bot\nIf you have any issues with this bot please contact me'
+    infoss = f'Hai {my_userid},\nI am Ruby the owner of this bot.\nI\'ve used an open source project to create this bot\nIf you have any issues with this bot please contact me'
     query = update.callback_query
     message = query.message
     user_id = query.from_user.id
