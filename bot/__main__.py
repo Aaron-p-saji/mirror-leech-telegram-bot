@@ -105,34 +105,31 @@ def ping(update, context):
     editMessage("🟢🟢🟢", reply)
     editMessage("🟢🟢🟢", reply)
     editMessage(f'{end_time - start_time} ms', reply)
-
-info_string = f'''
-    𝕋𝕙𝕚𝕤 𝕚𝕤 𝕒 𝕄𝕚𝕣𝕣𝕠𝕣 𝔹𝕠𝕥
-'''
-
-def info(update, context):
+    
+def aboutme(update, context):
+    user = update.message.from_user 
+    info_string = f' 𝙷𝚊𝚒 {user.first_name}\n✯**𝙼𝚈 𝙽𝙰𝙼𝙴**: *{context.bot.first_name}*\n✯ **𝙲𝚁𝙴𝙰𝚃𝙾𝚁**: *[Ruby Mathews](https://t.me/gDrive_linkz)*\n✯ **𝙻𝙸𝙱𝚁𝙰𝚁𝚈**: *PYTHON\-TELEGRAM\-BOT*\n✯ **𝙻𝙰𝙽𝙶𝚄𝙰𝙶𝙴**: *PYTHON 𝟹*\n✯ **𝙳𝙰𝚃𝙰𝙱𝙰𝚂𝙴**: *MONGO DB*\n✯ **𝙱𝙾𝚃 𝚂𝙴𝚁𝚅𝙴𝚁**: *HEROKU*'
     img = 'https://telegra.ru.com/p/e74261e8x916320db94d2b30b241cddf245e669a64b26be2'
     buttonu = ButtonMaker()
-    buttonu.sbutton("Mirror Group", 'aebx')
+    buttonu.sbutton("🎫 Owners Note 🎫", 'aebx')
     reply_markup = InlineKeyboardMarkup(buttonu.build_menu(1))
     sendImgz(img, info_string, context.bot, update.message, reply_markup)
 
-def infocc(update, context):
+def aboutcc(update, context):
     icpuUsage = cpu_percent(interval=0.5)
     imemory = virtual_memory()
     imem_p = imemory.percent
     itotal, iused, ifree, idisk = disk_usage('/')
     
-    infoss = f'CPU: {icpuUsage}%\n' \
-             f'RAM: {imem_p}%\n' \
-             f'DISK: {idisk}%\n\n'
+    infos = 'Processing....'
+    infoss = f'Hai {update.message.from_user.first_name},\nIam Ruby the owner of this bot.\nI\'ve used an open source project to create this bot\nIf you have any issues with this bot please contact me'
     query = update.callback_query
     message = query.message
     user_id = query.from_user.id
     data = query.data
     data = data.split()
+    query.answer(text=infos, show_alert=False)
     query.answer(text=infoss, show_alert=True)
-
 
 def log(update, context):
     sendLogFile(context.bot, update.message)
