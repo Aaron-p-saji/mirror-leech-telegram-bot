@@ -106,6 +106,33 @@ def ping(update, context):
     editMessage("🟢🟢🟢", reply)
     editMessage(f'{end_time - start_time} ms', reply)
 
+info_string = f'''
+    𝕋𝕙𝕚𝕤 𝕚𝕤 𝕒 𝕄𝕚𝕣𝕣𝕠𝕣 𝔹𝕠𝕥
+'''
+
+def info(update, context):
+    img = 'https://telegra.ru.com/p/e74261e8x916320db94d2b30b241cddf245e669a64b26be2'
+    buttonu = ButtonMaker()
+    buttonu.sbutton("Mirror Group", 'aebx')
+    reply_markup = InlineKeyboardMarkup(buttonu.build_menu(1))
+    sendImgz(img, info_string, context.bot, update.message, reply_markup)
+
+def infocc(update, context):
+    icpuUsage = cpu_percent(interval=0.5)
+    imemory = virtual_memory()
+    imem_p = imemory.percent
+    itotal, iused, ifree, idisk = disk_usage('/')
+    
+    infoss = f'CPU: {icpuUsage}%\n' \
+             f'RAM: {imem_p}%\n' \
+             f'DISK: {idisk}%\n\n'
+    query = update.callback_query
+    message = query.message
+    user_id = query.from_user.id
+    data = query.data
+    data = data.split()
+    query.answer(text=infoss, show_alert=True)
+
 
 def log(update, context):
     sendLogFile(context.bot, update.message)
@@ -250,6 +277,8 @@ def main():
         osremove(".restartmsg")
 
     start_handler = CommandHandler(BotCommands.StartCommand, start, run_async=True)
+    info_handler = CommandHandler(BotCommands.InfoCommand, info, run_async=True)
+    infocc_handler = CallbackQueryHandler(infocc, pattern="aebx", run_async=True)
     ping_handler = CommandHandler(BotCommands.PingCommand, ping,
                                   filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
     restart_handler = CommandHandler(BotCommands.RestartCommand, restart,
@@ -260,6 +289,8 @@ def main():
                                    stats, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
     log_handler = CommandHandler(BotCommands.LogCommand, log, filters=CustomFilters.owner_filter | CustomFilters.sudo_user, run_async=True)
     dispatcher.add_handler(start_handler)
+    dispatcher.add_handler(info_handler)
+    dispatcher.add_handler(infocc_handler)
     dispatcher.add_handler(ping_handler)
     dispatcher.add_handler(restart_handler)
     dispatcher.add_handler(help_handler)
