@@ -123,8 +123,8 @@ def aboutcc(update, context):
     user_id = query.from_user.id
     data = query.data
     data = data.split()
-    query.answer(text=infos, show_alert=False)
     query.answer(text=infoss, show_alert=True)
+    query.answer(text=infos)
 
 def log(update, context):
     sendLogFile(context.bot, update.message)
