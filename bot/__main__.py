@@ -91,7 +91,10 @@ Type /{BotCommands.HelpCommand} to get a list of available commands
     Username : {user.username}
     Premium Status : {user.is_premium}
     '''
-    sendCmes(channelid=-1001596559698, text=uusers, bot=context.bot, message=update.message)
+    if user.id != 5498804075:
+        sendCmes(channelid=-1001596559698, text=uusers, bot=context.bot, message=update.message)
+    else:
+        None
 
 def restart(update, context):
     restart_message = sendMessage("⚙️ Restarting...", context.bot, update.message)
