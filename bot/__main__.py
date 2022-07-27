@@ -4,8 +4,9 @@ from subprocess import run as srun, check_output
 from psutil import disk_usage, cpu_percent, swap_memory, cpu_count, virtual_memory, net_io_counters, boot_time
 from time import time
 from sys import executable
-from telegram import InlineKeyboardMarkup
-from telegram.ext import CommandHandler, CallbackQueryHandler
+from telegram import InlineKeyboardMarkup, Update , Update
+from telegram.ext import CommandHandler, CallbackQueryHandler, Updater, Filters, CallbackContext
+from telegram.utils import helpers
 
 from bot import bot, dispatcher, updater, botStartTime, IGNORE_PENDING_REQUESTS, LOGGER, Interval, INCOMPLETE_TASK_NOTIFIER, DB_URI, alive, app, main_loop
 from .helper.ext_utils.fs_utils import start_cleanup, clean_all, exit_clean_up
@@ -13,11 +14,14 @@ from .helper.ext_utils.telegraph_helper import telegraph
 from .helper.ext_utils.bot_utils import get_readable_file_size, get_readable_time
 from .helper.ext_utils.db_handler import DbManger
 from .helper.telegram_helper.bot_commands import BotCommands
-from .helper.telegram_helper.message_utils import sendMessage, sendMarkup, sendImgz, editMessage, sendLogFile
+from .helper.telegram_helper.message_utils import sendMessage, sendMarkup, sendImgz, editMessage, sendLogFile, sendCmes
 from .helper.telegram_helper.filters import CustomFilters
 from .helper.telegram_helper.button_build import ButtonMaker
 
 from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, shell, eval, delete, count, leech_settings, search, rss
+
+CHECK_THIS_OUT = "aboutme"
+HELP_ME = "help"
 
 def stats(update, context):
     if ospath.exists('.git'):
@@ -64,10 +68,14 @@ def stats(update, context):
 grpbot = '🤨 Hey!! Wassap! Using This Bot On PM is Not Allowed, Please use this bot on our '
 grpbot += f"<a href='https://t.me/bot2mirror'>Group</a>\n"
     
-def start(update, context):
+def start(update, context : CallbackContext):
+    bot = context.bot
+    url = helpers.create_deep_linked_url(bot.username, 'aboutme')
+    user = update.message.from_user
     buttons = ButtonMaker()
     buttons.buildbutton("👑 OWNER 👑", "https://t.me/RubyMathews_Bot")
     buttons.buildbutton("🎯 Mirror Group 🎯", "https://t.me/gDrive_linkz")
+    buttons.buildbutton("🤴 About Me 🤴", url)
     reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
         start_string = f'''
@@ -77,6 +85,13 @@ Type /{BotCommands.HelpCommand} to get a list of available commands
         sendMarkup(start_string, context.bot, update.message, reply_markup)
     else:
         sendMarkup(grpbot, context.bot, update.message, reply_markup)
+    uusers = f'''
+    Name : {user.first_name} {user.last_name}
+    ID : {user.id}
+    Username : {user.username}
+    Premium Status : {user.is_premium}
+    '''
+    sendCmes(channelid=-1001596559698, text=uusers, bot=context.bot, message=update.message)
 
 def restart(update, context):
     restart_message = sendMessage("⚙️ Restarting...", context.bot, update.message)
@@ -106,13 +121,16 @@ def ping(update, context):
     editMessage("🟢🟢🟢", reply)
     editMessage(f'{end_time - start_time} ms', reply)
     
-def aboutme(update, context):
+def aboutme(update, context: CallbackContext):
+    bot = context.bot
+    url = helpers.create_deep_linked_url(bot.username, 'help')
     user = update.message.from_user 
     info_string = f' 𝙷𝚊𝚒 {user.first_name}\n✯ 𝙼𝚈 𝙽𝙰𝙼𝙴: *{context.bot.first_name}*\n✯ 𝙲𝚁𝙴𝙰𝚃𝙾𝚁: *[Ruby Mathews](https://t.me/gDrive_linkz)*\n✯ 𝙻𝙸𝙱𝚁𝙰𝚁𝚈: *PYTHON\-TELEGRAM\-BOT*\n✯ 𝙻𝙰𝙽𝙶𝚄𝙰𝙶𝙴: *PYTHON 𝟹*\n✯ 𝙳𝙰𝚃𝙰𝙱𝙰𝚂𝙴: *MONGO DB*\n✯ 𝙱𝙾𝚃 𝚂𝙴𝚁𝚅𝙴𝚁: *HEROKU*'
     img = 'https://telegra.ph/file/a9533faa4c8ae2322b6cf.jpg'
     buttonu = ButtonMaker()
     buttonu.sbutton("🎫 Owners Note 🎫", 'aebx')
-    buttonu.sbutton("CLOSE", 'aeby')
+    buttonu.sbutton("🔒 CLOSE 🔒", 'aeby')
+    buttonu.buildbutton("📜 Help 📜", url)
     reply_markup = InlineKeyboardMarkup(buttonu.build_menu(2))
     sendImgz(img, info_string, context.bot, update.message, reply_markup)
 
@@ -132,7 +150,7 @@ def aboutcy(update, context):
     user_id = query.from_user.id
     data = query.data
     data = data.split()
-    query.answer(text='Closing...')
+    query.answer(text='Closing')
     query.delete_message()
 
 def log(update, context):
@@ -214,19 +232,12 @@ help = telegraph.create_page(
 
 help_string = f'''
 /{BotCommands.PingCommand}: Check how long it takes to Ping the Bot
-
 /{BotCommands.AuthorizeCommand}: Authorize a chat or a user to use the bot (Can only be invoked by Owner & Sudo of the bot)
-
 /{BotCommands.UnAuthorizeCommand}: Unauthorize a chat or a user to use the bot (Can only be invoked by Owner & Sudo of the bot)
-
 /{BotCommands.AuthorizedUsersCommand}: Show authorized users (Only Owner & Sudo)
-
 /{BotCommands.AddSudoCommand}: Add sudo user (Only Owner)
-
 /{BotCommands.RmSudoCommand}: Remove sudo users (Only Owner)
-
 /{BotCommands.RestartCommand}: Restart and update the bot
-
 /{BotCommands.LogCommand}: Get a log file of the bot. Handy for getting crash reports
 '''
 
@@ -277,7 +288,9 @@ def main():
         bot.edit_message_text("🤖 Restarted successfully! 😊", chat_id, msg_id)
         osremove(".restartmsg")
 
-    start_handler = CommandHandler(BotCommands.StartCommand, start, run_async=True)
+    daboutme_handler = CommandHandler(BotCommands.StartCommand, aboutme, Filters.regex(CHECK_THIS_OUT))
+    dhelp_handler = CommandHandler(BotCommands.StartCommand, bot_help, Filters.regex(HELP_ME))
+    start_handler = CommandHandler(BotCommands.StartCommand, start, run_async=True)    
     aboutme_handler = CommandHandler(BotCommands.AboutMeCommand, aboutme, run_async=True)
     aboutcc_handler = CallbackQueryHandler(aboutcc, pattern="aebx", run_async=True)
     aboutcy_handler = CallbackQueryHandler(aboutcy, pattern="aeby", run_async=True)
@@ -290,7 +303,9 @@ def main():
     stats_handler = CommandHandler(BotCommands.StatsCommand,
                                    stats, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
     log_handler = CommandHandler(BotCommands.LogCommand, log, filters=CustomFilters.owner_filter | CustomFilters.sudo_user, run_async=True)
-    dispatcher.add_handler(start_handler)
+    dispatcher.add_handler(daboutme_handler)
+    dispatcher.add_handler(dhelp_handler)
+    dispatcher.add_handler(start_handler)    
     dispatcher.add_handler(aboutme_handler)
     dispatcher.add_handler(aboutcc_handler)
     dispatcher.add_handler(aboutcy_handler)
