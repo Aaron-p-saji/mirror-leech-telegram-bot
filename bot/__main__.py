@@ -302,6 +302,8 @@ def main():
     aboutme_handler = CommandHandler(BotCommands.AboutMeCommand, aboutme, run_async=True)
     aboutcc_handler = CallbackQueryHandler(aboutcc, pattern="aebx", run_async=True)
     aboutcy_handler = CallbackQueryHandler(aboutcy, pattern="aeby", run_async=True)
+    vvvid_handler = CommandHandler(BotCommands.PingCommand, vvvid,
+                                  filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
     ping_handler = CommandHandler(BotCommands.PingCommand, ping,
                                   filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
     restart_handler = CommandHandler(BotCommands.RestartCommand, restart,
