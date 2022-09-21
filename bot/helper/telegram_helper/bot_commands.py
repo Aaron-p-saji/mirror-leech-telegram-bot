@@ -5,6 +5,7 @@ class _BotCommands:
     def __init__(self):
         self.StartCommand = f'start{CMD_INDEX}'
         self.AboutMeCommand = f'aboutme{CMD_INDEX}'
+        self.VvvidCommand = f'ping{CMD_INDEX}'
         self.MirrorCommand = f'mirror{CMD_INDEX}'
         self.UnzipMirrorCommand = f'unzipmirror{CMD_INDEX}'
         self.ZipMirrorCommand = f'zipmirror{CMD_INDEX}'
