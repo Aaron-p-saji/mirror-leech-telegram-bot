@@ -62,12 +62,12 @@ def sendImgz(photo, caption : str, bot, message: Message, reply_markup: InlineKe
         LOGGER.error(str(e))
         return
 
-def sendVid(video, caption : str, bot, message: Message, reply_markup: InlineKeyboardMarkup):
+def sendVid(video, bot, message: Message):
     try:
         return bot.send_photo(message.chat_id,
                               video=video,
                             reply_to_message_id=message.message_id,
-                            caption=caption, reply_markup=reply_markup, allow_sending_without_reply=True,
+                            allow_sending_without_reply=True,
                             parse_mode='MarkdownV2', filename='mirror_Vala-image', protect_content=False)
     except RetryAfter as r:
         LOGGER.warning(str(r))
