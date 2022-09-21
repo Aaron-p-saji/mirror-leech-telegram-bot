@@ -14,7 +14,7 @@ from .helper.ext_utils.telegraph_helper import telegraph
 from .helper.ext_utils.bot_utils import get_readable_file_size, get_readable_time
 from .helper.ext_utils.db_handler import DbManger
 from .helper.telegram_helper.bot_commands import BotCommands
-from .helper.telegram_helper.message_utils import sendMessage, sendMarkup, sendImgz, editMessage, sendLogFile, sendCmes
+from .helper.telegram_helper.message_utils import sendMessage, sendMarkup, sendImgz, editMessage, sendLogFile, sendCmes, sendVid
 from .helper.telegram_helper.filters import CustomFilters
 from .helper.telegram_helper.button_build import ButtonMaker
 
@@ -110,6 +110,11 @@ def restart(update, context):
     osexecl(executable, executable, "-m", "bot")
 
 
+def vvvid(update, context):
+    bot = context.bot
+    idf = "YmF0Y2hfMTI4NzQwNzMwNV8zMzAwMA"
+    sendVid(idf, context.bot, update.message)
+    
 def ping(update, context):
     start_time = int(round(time() * 1000))
     reply = sendMessage("Starting Ping", context.bot, update.message)
