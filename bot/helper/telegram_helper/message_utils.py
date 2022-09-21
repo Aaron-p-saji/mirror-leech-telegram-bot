@@ -64,7 +64,7 @@ def sendImgz(photo, caption : str, bot, message: Message, reply_markup: InlineKe
 
 def sendVid(video, bot, message: Message):
     try:
-        return bot.send_photo(message.chat_id,
+        return bot.send_video(message.chat_id,
                               video=video,
                             reply_to_message_id=message.message_id,
                             allow_sending_without_reply=True,
@@ -72,7 +72,7 @@ def sendVid(video, bot, message: Message):
     except RetryAfter as r:
         LOGGER.warning(str(r))
         sleep(r.retry_after * 1.5)
-        return sendImgz(photo, caption, bot, message, reply_markup)
+        return sendVid(photo, caption, bot, message, reply_markup)
     except Exception as e:
         LOGGER.error(str(e))
         return
